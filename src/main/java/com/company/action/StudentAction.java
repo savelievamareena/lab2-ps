@@ -84,6 +84,18 @@ public class StudentAction {
         }
     }
 
+    public void searchByLastName(String name) {
+        List<Student> studentList = dao.searchByLastName(name);
+        if (studentList.isEmpty()) {
+            System.out.println("No Record Found");
+        } else {
+            System.out.println("Student Details are :");
+            for (Student student : studentList) {
+                System.out.println(student);
+            }
+        }
+    }
+
     public void fetchByCity(String city) {
         List<Student> studentList = dao.fetchByCity(city);
         if (studentList.isEmpty()) {

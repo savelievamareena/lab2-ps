@@ -185,6 +185,32 @@ public class StudentDao {
         return studentList;
     }
 
+    public List<Student> searchByLastName(String name) {
+        List<Student> studentList = new ArrayList<>();
+
+        con = ConnectionFactory.getConnection();
+        try {
+            String query = "select * from student where lname=?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, name);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Student student = new Student();
+                StudentDao.getStudentsData(student, rs);
+                studentList.add(student);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return studentList;
+    }
+
     public List<Student> fetchByCity(String city) {
         List<Student> studentList = new ArrayList<>();
 
@@ -216,13 +242,16 @@ public class StudentDao {
 
         con = ConnectionFactory.getConnection();
         try {
-
-
-
-
-            // Найти студентов с ЗП в пределах От и До
-
-
+            String query = "select * from student where salary >= ? AND salary <= ?";
+            ps = con.prepareStatement(query);
+            ps.setBigDecimal(1, lowerSalary);
+            ps.setBigDecimal(2, higherSalary);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Student student = new Student();
+                StudentDao.getStudentsData(student, rs);
+                studentList.add(student);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -267,12 +296,16 @@ public class StudentDao {
 
         con = ConnectionFactory.getConnection();
         try {
-
-
-            // Найти студентов с датами От и До
-
-
-
+            String query = "select * from student where dob >= ? AND doj <= ?";
+            ps = con.prepareStatement(query);
+            ps.setDate(1, startDate);
+            ps.setDate(2, endDate);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Student student = new Student();
+                StudentDao.getStudentsData(student, rs);
+                studentList.add(student);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -291,10 +324,6 @@ public class StudentDao {
 
         con = ConnectionFactory.getConnection();
         try {
-
-            // Модернизируйте поиск - отсортировав от большего к меньшему по полю id
-
-
             String query = "select * from student";
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();

@@ -6,14 +6,13 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Scanner;
 
-
 public class MainClass {
 
     StudentAction action = new StudentAction();
 
     public static void main(String[] args) {
-        String DbOperation = "EXIT(0), ADD(1), UPDATE(2), DELETE(3), FETCHBYID(4), FETCHBYEMAIL(5), FETCHBYMOBNO(6), FETCHBYNAME(7),"
-                + "FETCHBYCITY(8), FETCHBYSALRANGE(9), FETCHBYDOB(10), FETCHBYDOJRANGE(11), FETCHALL(12)";
+        String DbOperation = "EXIT(0), ADD(1), UPDATE(2), DELETE(3), FETCHBYID(4), FETCHBYEMAIL(5), FETCHBYMOBNO(6), FETCHBYFIRSTNAME(7),"
+                + "FETCHBYCITY(8), FETCHBYSALRANGE(9), FETCHBYDOB(10), FETCHBYDOJRANGE(11), FETCHALL(12), FETCHBYLASTNAME(13)";
 
         MainClass mainclass = new MainClass();
         int value = 0;
@@ -21,7 +20,7 @@ public class MainClass {
             System.out.println("valid operations are");
 
             System.out.println(DbOperation);
-            System.out.println("Enter valid operation number 0-12");
+            System.out.println("Enter valid operation number 0-13");
             Scanner scanner = new Scanner(System.in);
             value = scanner.nextInt();
 
@@ -62,6 +61,9 @@ public class MainClass {
                     break;
                 case 12:
                     mainclass.fetchAllStudent();
+                    break;
+                case 13:
+                    mainclass.searchStudentByLastName();
                     break;
                 case 0:
                     System.out.println("Exiting code");
@@ -116,7 +118,7 @@ public class MainClass {
 
     public void searchStudentByName() {
         Scanner insert = new Scanner(System.in);
-        System.out.println("Enter Student Name");
+        System.out.println("Enter Student First Name");
         String name = insert.next();
         action.searchByName(name);
     }
@@ -155,6 +157,13 @@ public class MainClass {
 
     public void fetchAllStudent() {
         action.fetchAll();
+    }
+
+    public void searchStudentByLastName() {
+        Scanner insert = new Scanner(System.in);
+        System.out.println("Enter Student Last Name");
+        String name = insert.next();
+        action.searchByLastName(name);
     }
 
     public static void insertStudentsData(Student student, Scanner insert) {
